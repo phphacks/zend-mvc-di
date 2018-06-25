@@ -1,3 +1,3 @@
 # zend-mvc-di
 
-Dependency Injection made easy.
+Dependency injection made easy for Zend Framework 3.
