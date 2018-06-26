@@ -93,11 +93,9 @@ class DependencyMapper
         $this->flatMap = array_merge($this->flatMap, array_values($dependencies));
         $this->flatMap = array_unique($this->flatMap);
 
-        if($reflector->hasSubDependencies()){
-            foreach ($dependencies as $dependency){
-                $this->setSubject($dependency);
-                $this->map();
-            }
+        foreach ($dependencies as $dependency){
+            $this->setSubject($dependency);
+            $this->map();
         }
 
         return $this->map;

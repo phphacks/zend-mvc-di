@@ -27,7 +27,7 @@ class DependencyMapperTest extends TestCase
         $mapper->setContainer(new ServiceManager());
         $map = $mapper->map();
 
-        $this->assertCount(2, $map);
+        $this->assertCount(3, $map);
     }
 
     /**
