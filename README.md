@@ -50,5 +50,33 @@ class AuthenticationService
    {
       $this->repository = $repository;
    }
+   
+   public function createToken($username, $password): string
+   {
+      $rows = $this->repository->getRecordsByUsernameAndPassword($username, $password);
+      
+      if(count($rows) != 1) {
+         throw new \InvalidArgumentException('Username or password incorrect');
+      }
+      
+      return md5($username . $password);
+   }
 }
 ```
+
+**Create your controller**
+<?php
+
+class AuthenticationController extends AbstractActionController
+{
+   private $authenticationService;
+   
+   public function __construct(AuthenticationService $authenticationService)
+   {
+      $this->authenticationService = $authenticationService.
+   }
+   
+   public function loginAction()
+   {
+   }
+}
