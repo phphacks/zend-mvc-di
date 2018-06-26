@@ -70,7 +70,6 @@ class Resolver
 
         if($container->has($subject)) {
             $instance = $container->get($subject);
-            $container->setService($subject, $instance);
             return $instance;
         }
 

@@ -3,6 +3,7 @@
 namespace Zend\Mvc\Di\Dependency\Map;
 
 use Zend\Mvc\Di\Dependency\Reflection\DependencyReflector;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * DependencyMapFactory
@@ -15,6 +16,11 @@ class DependencyMapper
      * @var string
      */
     private $subject;
+
+    /**
+     * @var ServiceManager
+     */
+    private $container;
 
     /**
      * @var array
@@ -43,6 +49,22 @@ class DependencyMapper
     }
 
     /**
+     * @return ServiceManager
+     */
+    public function getContainer(): ServiceManager
+    {
+        return $this->container;
+    }
+
+    /**
+     * @param ServiceManager $container
+     */
+    public function setContainer(ServiceManager $container): void
+    {
+        $this->container = $container;
+    }
+
+    /**
      * @return array
      */
     public function getFlatMap(): array
@@ -57,6 +79,10 @@ class DependencyMapper
      */
     public function map(): array
     {
+        if($this->getContainer()->has($this->getSubject())) {
+            return [];
+        }
+
         $reflector = new DependencyReflector($this->getSubject());
         $dependencies = $reflector->getDependencies();
         $this->map[$this->getSubject()] = $dependencies;
