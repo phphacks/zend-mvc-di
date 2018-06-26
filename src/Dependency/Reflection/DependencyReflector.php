@@ -2,6 +2,7 @@
 
 namespace Zend\Mvc\Di\Dependency\Reflection;
 use Zend\Mvc\Di\Exceptions\UnsolvableDependencyException;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * DependencyReflection
@@ -11,9 +12,30 @@ use Zend\Mvc\Di\Exceptions\UnsolvableDependencyException;
 class DependencyReflector extends \ReflectionClass
 {
     /**
+     * @var ServiceManager
+     */
+    private $container;
+
+    /**
      * @var bool
      */
     private $hasSubDependencies = false;
+
+    /**
+     * @return ServiceManager
+     */
+    public function getContainer(): ServiceManager
+    {
+        return $this->container;
+    }
+
+    /**
+     * @param ServiceManager $container
+     */
+    public function setContainer(ServiceManager $container): void
+    {
+        $this->container = $container;
+    }
 
     /**
      * @return bool
@@ -35,6 +57,7 @@ class DependencyReflector extends \ReflectionClass
      */
     private function isSolvable(\ReflectionParameter $parameter): bool
     {
+
         if ($parameter->getType() == null && !$parameter->isOptional()) {
             return false;
         }
@@ -84,6 +107,10 @@ class DependencyReflector extends \ReflectionClass
     {
         $dependencies = [];
         $constructor = $this->getConstructor();
+
+        if($this->getContainer()->has($this->getName())){
+            return $dependencies;
+        }
 
         if (!$this->hasDependencies($constructor)) {
             return $dependencies;

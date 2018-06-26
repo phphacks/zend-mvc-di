@@ -84,6 +84,7 @@ class DependencyMapper
         }
 
         $reflector = new DependencyReflector($this->getSubject());
+        $reflector->setContainer($this->getContainer());
         $dependencies = $reflector->getDependencies();
         $this->map[$this->getSubject()] = $dependencies;
 
