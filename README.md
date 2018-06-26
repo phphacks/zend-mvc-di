@@ -79,6 +79,14 @@ class AuthenticationController extends AbstractActionController
    
    public function loginAction()
    {
+      $username = $this->params()->fromPost('username');
+      $password = $this->params()->fromPost('password');
+      
+      $token = $this->authenticationService->createToken($username, $password);
+      
+      return new JsonModel([
+         'token' => $token
+      ]);
    }
 }
 ```
