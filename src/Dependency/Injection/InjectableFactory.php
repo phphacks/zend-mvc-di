@@ -35,6 +35,7 @@ class InjectableFactory implements FactoryInterface
         $dependencyMapper->setSubject($requestedName);
 
         $map = $dependencyMapper->map();
+
         $resolver->setMap($map);
 
         $flatMap = $dependencyMapper->getFlatMap();
