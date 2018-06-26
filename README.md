@@ -65,6 +65,7 @@ class AuthenticationService
 ```
 
 **Create your controller**
+```php
 <?php
 
 class AuthenticationController extends AbstractActionController
@@ -80,3 +81,4 @@ class AuthenticationController extends AbstractActionController
    {
    }
 }
+```
