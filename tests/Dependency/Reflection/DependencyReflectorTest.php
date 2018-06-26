@@ -8,6 +8,7 @@ use Zend\Mvc\Di\Tests\Subjects\Bus;
 use Zend\Mvc\Di\Tests\Subjects\Car;
 use Zend\Mvc\Di\Tests\Subjects\Engine;
 use Zend\Mvc\Di\Tests\Subjects\Piston;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * DependencyReflectorTest
@@ -25,6 +26,7 @@ class DependencyReflectorTest extends TestCase
     public function testIfDependenciesAreDetected()
     {
         $reflector = new DependencyReflector(Car::class);
+        $reflector->setContainer(new ServiceManager());
         $dependencies = $reflector->getDependencies();
 
         $this->assertEquals(1, count($dependencies));
@@ -39,9 +41,11 @@ class DependencyReflectorTest extends TestCase
     public function testIfSubDependenciesAreDetected()
     {
         $carReflector = new DependencyReflector(Car::class);
+        $carReflector->setContainer(new ServiceManager());
         $carReflector->getDependencies();
 
         $engineReflector = new DependencyReflector(Engine::class);
+        $engineReflector->setContainer(new ServiceManager());
         $engineReflector->getDependencies();
 
         $this->assertTrue($carReflector->hasSubDependencies());
@@ -58,6 +62,7 @@ class DependencyReflectorTest extends TestCase
     public function testIfUnsolvableDependenciesThrowsException()
     {
         $reflector = new DependencyReflector(Bus::class);
+        $reflector->setContainer(new ServiceManager());
         $reflector->getDependencies();
     }
 }

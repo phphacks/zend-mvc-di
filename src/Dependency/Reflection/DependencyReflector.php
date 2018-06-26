@@ -83,6 +83,13 @@ class DependencyReflector extends \ReflectionClass
         }
 
         foreach ($constructor->getParameters() as $parameter) {
+
+            $class = $parameter->getClass();
+
+            if(!empty($class) && $this->getContainer()->has($class->getName())){
+                continue;
+            }
+
             if (!$this->isSolvable($parameter)) {
                 throw new UnsolvableDependencyException(sprintf('Is not possible to solve parameter "$%s" in class "%s"',
                     $parameter->getName(),
@@ -92,6 +99,7 @@ class DependencyReflector extends \ReflectionClass
 
             $dependency = $parameter->getType()->getName();
             $reflector = new DependencyReflector($dependency);
+            $reflector->setContainer($this->getContainer());
             $this->hasSubDependencies = $reflector->hasDependencies($reflector->getConstructor());
         }
 

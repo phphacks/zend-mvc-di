@@ -74,6 +74,7 @@ class Resolver
         }
 
         $reflector = new DependencyReflector($subject);
+        $reflector->setContainer($container);
 
         if(!$reflector->hasDependencies($reflector->getConstructor())) {
             $instance = $reflector->newInstance();

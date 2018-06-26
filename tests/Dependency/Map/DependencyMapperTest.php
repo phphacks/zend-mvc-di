@@ -7,6 +7,7 @@ use Zend\Mvc\Di\Dependency\Map\DependencyMapper;
 use Zend\Mvc\Di\Tests\Subjects\Bus;
 use Zend\Mvc\Di\Tests\Subjects\Car;
 use Zend\Mvc\Di\Tests\Subjects\Piston;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * DependencyMapperTest
@@ -23,6 +24,7 @@ class DependencyMapperTest extends TestCase
     {
         $mapper = new DependencyMapper();
         $mapper->setSubject(Car::class);
+        $mapper->setContainer(new ServiceManager());
         $map = $mapper->map();
 
         $this->assertCount(2, $map);
@@ -36,6 +38,7 @@ class DependencyMapperTest extends TestCase
     {
         $mapper = new DependencyMapper();
         $mapper->setSubject(Car::class);
+        $mapper->setContainer(new ServiceManager());
         $mapper->map();
         $map = $mapper->getFlatMap();
 
@@ -52,6 +55,7 @@ class DependencyMapperTest extends TestCase
     {
         $mapper = new DependencyMapper();
         $mapper->setSubject(Bus::class);
+        $mapper->setContainer(new ServiceManager());
         $mapper->map();
     }
 }

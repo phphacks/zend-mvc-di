@@ -21,6 +21,7 @@ class ResolverTest extends TestCase
         $resolver = new Resolver();
 
         $dependencyMapper = new DependencyMapper();
+        $dependencyMapper->setContainer($serviceManager);
         $dependencyMapper->setSubject(Car::class);
 
         $map = $dependencyMapper->map();
